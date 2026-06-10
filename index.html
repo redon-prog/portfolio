@@ -1,0 +1,470 @@
+﻿<!DOCTYPE html>
+<html lang="sq">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redon Salihi | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Plus+Jakarta+Sans:wght=200;300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f7f7f9;
+            --surface: #ffffff;
+            --text: #18181b;
+            --text-muted: #71717a;
+            --accent: #b89742;
+            --font-display: 'Italiana', serif;
+            --font-sans: 'Plus Jakarta Sans', sans-serif;
+            --ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: var(--font-sans);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .smooth-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Fixed Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 2.5rem 3.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            pointer-events: none;
+        }
+
+        .logo {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: 2px;
+            pointer-events: auto;
+        }
+
+        .nav-meta {
+            font-size: 0.75rem;
+            letter-spacing: 4px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* Kinetic Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 10%;
+            position: relative;
+        }
+
+        .hero-title-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .line-mask {
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(4rem, 10vw, 9rem);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -2px;
+            transform: translateY(100%);
+            animation: shiftUp 1.6s var(--ease) forwards;
+        }
+
+        .hero p {
+            font-size: clamp(0.8rem, 1.5vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            color: var(--accent);
+            transform: translateY(100%);
+            animation: shiftUp 1.6s var(--ease) 0.2s forwards;
+        }
+
+        /* Dynamic Horizontal Exhibition Stage */
+        .exhibition-container {
+            position: relative;
+            width: 100%;
+            background: #f0f0f3;
+        }
+
+        .horizontal-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+        }
+
+        .track {
+            display: flex;
+            gap: 15vw;
+            padding: 0 10vw;
+            will-change: transform;
+            height: 70vh;
+            align-items: center;
+        }
+
+        /* Individual Artwork Node */
+        .work-node {
+            position: relative;
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            width: 75vw;
+            flex-shrink: 0;
+        }
+
+            .work-node:nth-child(even) {
+                flex-direction: row-reverse;
+            }
+
+        /* Interactive Viewport Structure */
+        .viewport {
+            position: relative;
+            width: 42vw;
+            height: 55vh;
+            background: var(--surface);
+            overflow: hidden;
+            border-radius: 4px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+        }
+
+            .viewport img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: scale(1.1);
+                transition: transform 1.5s var(--ease);
+                will-change: transform;
+            }
+
+        .work-node.active .viewport img {
+            transform: scale(1);
+        }
+
+        /* Descriptive Structural Elements */
+        .details {
+            width: 25vw;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: transform 1.2s var(--ease), opacity 1.2s var(--ease);
+        }
+
+        .work-node.active .details {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.2s;
+        }
+
+        .meta-num {
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .details h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .details p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-weight: 300;
+        }
+
+        /* Interactive Progress Indicator */
+        .progress-bar-container {
+            position: fixed;
+            bottom: 3.5rem;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--accent);
+            will-change: width;
+        }
+
+        /* Elegant Outro & Profile Space */
+        .outro {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 8rem 10%;
+            background: var(--bg);
+            position: relative;
+            z-index: 2;
+        }
+
+            .outro h2 {
+                font-family: var(--font-display);
+                font-size: clamp(3rem, 6vw, 5.5rem);
+                font-weight: 400;
+                letter-spacing: -1px;
+                line-height: 1.1;
+                margin-bottom: 3rem;
+            }
+
+        .profile-paragraph {
+            max-width: 900px;
+            font-family: var(--font-sans);
+            font-size: clamp(1.1rem, 2vw, 1.6rem);
+            line-height: 1.6;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+            .profile-paragraph em {
+                font-family: var(--font-display);
+                font-style: normal;
+                color: var(--accent);
+            }
+
+        .footer-credits {
+            position: absolute;
+            bottom: 3.5rem;
+            left: 10%;
+            right: 10%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        @keyframes shiftUp {
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Normalization */
+        @media (max-width: 991px) {
+            .track {
+                gap: 20vw;
+            }
+
+            .work-node {
+                flex-direction: column !important;
+                width: 80vw;
+                gap: 2rem;
+            }
+
+            .viewport {
+                width: 80vw;
+                height: 40vh;
+            }
+
+            .details {
+                width: 80vw;
+            }
+
+            nav {
+                padding: 1.5rem;
+            }
+
+            .outro {
+                padding: 6rem 10%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="smooth-wrapper">
+
+        <nav>
+            <a href="#" class="logo">R.S</a>
+            <div class="nav-meta">Arkitektura e Portofolit — 2026</div>
+        </nav>
+
+        <header class="hero">
+            <div class="hero-title-container">
+                <div class="line-mask">
+                    <h1>Redon Salihi</h1>
+                </div>
+                <div class="line-mask">
+                    <p>Ekspozitë e Dizajnit Grafik</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="exhibition-container" id="scrollSection">
+            <div class="horizontal-sticky">
+                <div class="track" id="track">
+
+                    <section class="work-node">
+                        <div class="viewport">
+                            <img src="Fotot/Alphabet.png" alt="Ilustrimi i Alfabetit">
+                        </div>
+                        <div class="details">
+                            <span class="meta-num">01 / 05</span>
+                            <h2>Ilustrimi i Alfabetit</h2>
+                            <p>Një eksplorim arkitekturor i tipografisë tredimensionale. Ky kompozicion ndërthur sipërfaqet me teksturë të theksuar granilare në ngjyrë të verdhë-gjelbër me ankorimet strukturore në të artë të errët, duke i ngritur gjeometritë tradicionale të shkronjave në objekte gjeometrike të skulpturuara.</p>
+                        </div>
+                    </section>
+
+                    <section class="work-node">
+                        <div class="viewport">
+                            <img src="Fotot/Book Cover.png" alt="Mbeshtjelljesi i librit">
+                        </div>
+                        <div class="details">
+                            <span class="meta-num">02 / 05</span>
+                            <h2>Mbeshtjelljesi i librit</h2>
+                            <p>Një arritje e lartë në hierarkinë editoriale. Tipografia moderne me densitet të lartë dhe ngjyrë të zezë të thellë thyhet mbi një sfond të teksturuar në nuancë qelibari, e balancuar nga një insert fotografik qendror që përcjell emocion dhe ndjesi jetëshkurtër.</p>
+                        </div>
+                    </section>
+
+                    <section class="work-node">
+                        <div class="viewport">
+                            <img src="Fotot/NJE VIJE.jpg" alt="Vizatimi me nje vije te vetme">
+                        </div>
+                        <div class="details">
+                            <span class="meta-num">03 / 05</span>
+                            <h2>Vizatimi me nje vije te vetme</h2>
+                            <p>Reduksionizëm organik i realizuar përmes një ekzekutimi absolutisht minimalist. Duke përdorur një linjë të vetme të vazhdueshme dhe ritmike, ky ilustrim vendos pranë e pranë peshat e guximshme të vijës së papërpunuar me tonet e lëngshme dhe asinkrone të ngjyrës rozë të pluhurosur dhe orkidesë.</p>
+                        </div>
+                    </section>
+
+                    <section class="work-node">
+                        <div class="viewport">
+                            <img src="Fotot/TYPOGRAPHY copy.png" alt="Ilustrim Tipografik">
+                        </div>
+                        <div class="details">
+                            <span class="meta-num">04 / 05</span>
+                            <h2>Ilustrim Tipografik</h2>
+                            <p>Një riimagjinim i sofistikuar i elementeve të tipografisë së mesit të shekullit të kaluar. Format e shkronjave përdorin gjeometri komplekse të brendshme të ndjekjes së vijave, të kombinuara me projeksionin e shtresuar të hijeve për të balancuar ngrohtësinë me saktësinë editoriale.</p>
+                        </div>
+                    </section>
+
+                    <section class="work-node">
+                        <div class="viewport">
+                            <img src="Fotot/POP ART copy.png" alt="Pop Art">
+                        </div>
+                        <div class="details">
+                            <span class="meta-num">05 / 05</span>
+                            <h2>Pop Art</h2>
+                            <p>Art komercial pop i ngritur në një nivel tjetër përmes perspektivës së saktë dhe hapesirës së thellësisë. Mekanika dinamike në ngjyrë blu të qartë kërcen jashtë nga matricat e mprehta gjeometrike të shpërthimit, të ankoruara nga një strukturë e llogaritur rrezore e sfondit.</p>
+                        </div>
+                    </section>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-bar-container">
+            <div class="progress-fill" id="progressBar"></div>
+        </div>
+
+        <section class="outro">
+            <h2>Redon Salihi</h2>
+            <p class="profile-paragraph">
+                I lindur më <em>20 Maj të vitit 2007</em>, Redon Salihi është një artist vizual që formëson hapësirat përmes kornizave bashkëkohore të dizajnit grafik. Aktualisht duke kultivuar ideologjinë e tij krijuese në <em>Kolegjin AAB</em>, puna e tij ekziston në kryqëzimin e gjeometrisë editoriale të papërpunuar, sistemeve të tipografisë vintage me shumë shtresa dhe strukturave pop komerciale me ndikim të lartë.
+            </p>
+            <div class="footer-credits">
+                <div>Redon Salihi &copy; 2026</div>
+                <div>Të Gjitha Të Drejtat Të Rezervuara</div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        const scrollSection = document.getElementById('scrollSection');
+        const track = document.getElementById('track');
+        const progressBar = document.getElementById('progressBar');
+        const nodes = document.querySelectorAll('.work-node');
+
+        function calculateTrackLimits() {
+            const horizLength = track.scrollWidth;
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            scrollSection.style.height = `${(horizLength - windowWidth) + windowHeight}px`;
+        }
+
+        function transformExhibitionStage() {
+            const offsetTop = scrollSection.offsetTop;
+            const scrollTop = window.scrollY;
+
+            let progress = scrollTop - offsetTop;
+            const maxScroll = scrollSection.offsetHeight - window.innerHeight;
+
+            if (progress < 0) progress = 0;
+            if (progress > maxScroll) progress = maxScroll;
+
+            const percent = (progress / maxScroll) * 100;
+            const maxTranslate = track.scrollWidth - window.innerWidth;
+            const currentTranslate = (progress / maxScroll) * maxTranslate;
+
+            track.style.transform = `translateX(-${currentTranslate}px)`;
+            progressBar.style.width = `${percent}%`;
+
+            nodes.forEach(node => {
+                const box = node.getBoundingClientRect();
+                const nodeCenter = box.left + (box.width / 2);
+                const screenCenter = window.innerWidth / 2;
+
+                if (Math.abs(nodeCenter - screenCenter) < window.innerWidth * 0.4) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            });
+        }
+
+        window.addEventListener('resize', () => {
+            calculateTrackLimits();
+            transformExhibitionStage();
+        });
+
+        window.addEventListener('scroll', transformExhibitionStage);
+
+        setTimeout(() => {
+            calculateTrackLimits();
+            transformExhibitionStage();
+        }, 100);
+    </script>
+</body>
+</html>
